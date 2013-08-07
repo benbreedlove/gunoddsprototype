@@ -1,0 +1,712 @@
+var remaining_life_expectancy_by_age = {
+    male: {
+        "0-14"  : 76,
+        "15-24" : 61,
+        "25-34" : 52,
+        "35-44" : 42,
+        "45-54" : 33,
+        "55-64" : 25,
+        "65-74" : 17,
+        "75+"   : 11
+    },
+    female: {
+        "0-14"  : 81,
+        "15-24" : 66,
+        "25-34" : 56,
+        "35-44" : 47,
+        "45-54" : 37,
+        "55-64" : 28,
+        "65-74" : 20,
+        "75+"   : 12
+    }
+}
+
+var starting_age_of_age_bracket = {
+        "0-14"  : 0,
+        "15-24" : 15,
+        "25-34" : 25,
+        "35-44" : 35,
+        "45-54" : 45,
+        "55-64" : 55,
+        "65-74" : 65,
+        "75+"   : 75
+}
+
+var years_in_bracket = {
+        "0-14"  : 15,
+        "15-24" : 10,
+        "25-34" : 10,
+        "35-44" : 10,
+        "45-54" : 10,
+        "55-64" : 10,
+        "65-74" : 10,
+        "75+"   : 20 
+}
+
+var age_to_age_bracket = [];
+for (var bracket in years_in_bracket) {
+    for (var i = 0; i < years_in_bracket[bracket]; i++) {
+        age_to_age_bracket.push(bracket)
+    }
+}
+
+var everyone = {
+    pop     : 308745538,
+    cars    : 60055,
+    accident: 606,
+    suicide : 19392,
+    assault : 11078,
+    female  : {
+        pop : 156964212,
+        cars : 10609,
+        accident : 91,
+        suicide : 2430,
+        assault : 16962,
+        native : {
+            pop     : 1308430,
+            cars    : 208,
+            accident: 0,
+            suicide : 30,
+            assault : 14,
+                "0-14"  : {
+                    pop     : 310828,
+                    cars    : 12,
+                    accident: 0,
+                    suicide : 0,
+                    assault : 2
+                },
+                "15-24" : {
+                    pop     : 215082,
+                    cars    : 48,
+                    accident: 0,
+                    suicide : 5,
+                    assault : 2
+                },
+                "25-34" : {
+                    pop     : 178262,
+                    cars    : 53,
+                    accident: 0,
+                    suicide : 2,
+                    assault : 1
+                },
+                "35-44" : {
+                    pop     : 169389,
+                    cars    : 37,
+                    accident: 0,
+                    suicide : 8,
+                    assault : 7,
+                },
+                "45-54" : {
+                    pop     : 189283,
+                    cars    : 20,
+                    accident: 0,
+                    suicide : 9,
+                    assault : 2
+                },
+                "55-64" : {
+                    pop     : 134696,
+                    cars    : 18,
+                    accident: 0,
+                    suicide : 1,
+                    assault : 0
+                },
+                "65-74" : {
+                    pop     : 68142,
+                    cars    : 13,
+                    accident: 0,
+                    suicide : 3,
+                    assault : 0
+                },
+                "75+"   : {
+                    pop     : 42748,
+                    cars    : 7,
+                    accident: 0,
+                    suicide : 2,
+                    assault : 0
+                }
+        },
+        asian : {
+            pop     : 8431185,
+            cars    : 315,
+            accident: 1,
+            suicide : 22,
+            assault : 31,
+                "0-14"  : {
+                    pop     : 1555723,
+                    cars    : 9,
+                    accident: 0,
+                    suicide : 0,
+                    assault : 1
+                },
+                "15-24" : {
+                    pop     : 1141696,
+                    cars    : 38,
+                    accident: 1,
+                    suicide : 3,
+                    assault : 6
+                },
+                "25-34" : {
+                    pop     : 1426417,
+                    cars    : 46,
+                    accident: 0,
+                    suicide : 7,
+                    assault : 6
+                },
+                "35-44" : {
+                    pop     : 1393984,
+                    cars    : 28,
+                    accident: 0,
+                    suicide : 6,
+                    assault : 11
+                },
+                "45-54" : {
+                    pop     : 1182796,
+                    cars    : 38,
+                    accident: 0,
+                    suicide : 4,
+                    assault : 3
+                },
+                "55-64" : {
+                    pop     : 897380,
+                    cars    : 53,
+                    accident: 0,
+                    suicide : 2,
+                    assault : 4
+                },
+                "65-74" : {
+                    pop     : 480177,
+                    cars    : 50,
+                    accident: 0,
+                    suicide : 0,
+                    assault : 0
+                },
+                "75+"   : {
+                    pop     : 353012,
+                    cars    : 53,
+                    accident: 0,
+                    suicide : 0,
+                    assault : 0
+                }
+
+        },
+        african : {
+            pop     : 20624873, 
+            cars    : 1252,
+            accident: 12,
+            suicide : 11,
+            assault : 591,
+                "0-14"  : {
+                    pop     : 4544997,
+                    cars    : 97,
+                    accident: 1,
+                    suicide : 1,
+                    assault : 26
+                },
+                "15-24" : {
+                    pop     : 3319205,
+                    cars    : 271,
+                    accident: 5,
+                    suicide : 23,
+                    assault : 193
+                },
+                "25-34" : {
+                    pop     : 2839351,
+                    cars    : 206,
+                    accident: 2,
+                    suicide : 25,
+                    assault : 171
+                },
+                "35-44" : {
+                    pop     : 2788664,
+                    cars    : 173,
+                    accident: 3,
+                    suicide : 27,
+                    assault : 101
+                },
+                "45-54" : {
+                    pop     : 2925567,
+                    cars    : 188,
+                    accident: 0,
+                    suicide : 14,
+                    assault : 53
+                },
+                "55-64" : {
+                    pop     : 2121490,
+                    cars    : 135,
+                    accident: 1,
+                    suicide : 12,
+                    assault : 37
+                },
+                "65-74" : {
+                    pop     : 1154227,
+                    cars    : 82,
+                    accident: 0,
+                    suicide : 1,
+                    assault : 6
+                },
+                "75+"   : {
+                    pop     : 931372,
+                    cars    : 100,
+                    accident: 0,
+                    suicide : 8,
+                    assault : 4
+                }
+
+        },
+        white : {
+            pop     : 101740930,
+            cars    : 7580,
+            accident: 75,
+            suicide : 2166,
+            assault : 881,
+                "0-14"  : {
+                    pop     : 16460571,
+                    cars    : 335,
+                    accident: 9,
+                    suicide : 10,
+                    assault :  28
+                },
+                "15-24" : {
+                    pop     : 12426457,
+                    cars    : 1422,
+                    accident: 11,
+                    suicide : 148,
+                    assault : 121
+                },
+                "25-34" : {
+                    pop     : 11972057,
+                    cars    : 911,
+                    accident: 11,
+                    suicide : 253,
+                    assault : 162
+                },
+                "35-44" : {
+                    pop     : 12718235,
+                    cars    : 877,
+                    accident: 15,
+                    suicide : 411,
+                    assault : 176
+                },
+                "45-54" : {
+                    pop     : 15839099,
+                    cars    : 1044,
+                    accident: 14,
+                    suicide : 558,
+                    assault : 164
+                },
+                "55-64" : {
+                    pop     : 14048907,
+                    cars    : 870,
+                    accident: 8,
+                    suicide : 462,
+                    assault : 93
+                },
+                "65-74" : {
+                    pop     : 9000310,
+                    cars    : 736,
+                    accident: 6,
+                    suicide : 202,
+                    assault : 71
+                },
+                "75+"   : {
+                    pop     : 9275294,
+                    cars    : 1383,
+                    accident: 1,
+                    suicide : 122,
+                    assault : 66
+                }
+
+        },
+        hispanic : {
+            pop     : 24858794,
+            cars    : 1218,
+            accident: 3,
+            suicide : 94,
+            assault : 213,
+                "0-14"  : {
+                    pop     : 7066167,
+                    cars    : 138,
+                    accident: 1,
+                    suicide : 1,
+                    assault : 8
+                },
+                "15-24" : {
+                    pop     : 4206060,
+                    cars    : 322,
+                    accident: 1,
+                    suicide : 22,
+                    assault : 65,
+                },
+                "25-34" : {
+                    pop     : 4015770,
+                    cars    : 199,
+                    accident: 0,
+                    suicide : 19,
+                    assault : 55,
+                },
+                "35-44" : {
+                    pop     : 3564335,
+                    cars    : 162,
+                    accident: 1,
+                    suicide : 14,
+                    assault : 47,
+                },
+                "45-54" : {
+                    pop     : 2727612,
+                    cars    : 133,
+                    accident: 0,
+                    suicide : 19,
+                    assault : 22
+                },
+                "55-64" : {
+                    pop     : 1679108,
+                    cars    : 113,
+                    accident: 0,
+                    suicide : 15,
+                    assault : 8
+                },
+                "65-74" : {
+                    pop     : 914054,
+                    cars    : 70,
+                    accident: 0,
+                    suicide : 3,
+                    assault : 4
+                },
+                "75+"   : {
+                    pop     : 685688,
+                    cars    : 81,
+                    accident: 0,
+                    suicide : 1,
+                    assault : 4
+                }
+
+        }
+    },
+    male :  {
+        pop : 151781326,
+        cars : 24723,
+        accident : 515,
+        suicide : 16962,
+        assault : 9340,
+        native : {
+            pop     : 1261137,
+            cars    : 405,
+            accident: 13,
+            suicide : 139,
+            assault : 87,
+                "0-14"  : {
+                    pop     : 318602,
+                    cars    : 19,
+                    accident: 4,
+                    suicide : 1,
+                    assault : 0
+                },
+                "15-24" : {
+                    pop     : 221431,
+                    cars    : 116,
+                    accident: 4,
+                    suicide : 50,
+                    assault : 32,
+                },
+                "25-34" : {
+                    pop     : 174655,
+                    cars    : 76,
+                    accident: 4,
+                    suicide : 27,
+                    assault : 31,
+                },
+                "35-44" : {
+                    pop     : 161881,
+                    cars    : 69,
+                    accident: 1,
+                    suicide : 22,
+                    assault : 13,
+                },
+                "45-54" : {
+                    pop     : 174022,
+                    cars    : 62,
+                    accident: 0,
+                    suicide : 20,
+                    assault : 8
+                },
+                "55-64" : {
+                    pop     : 122812,
+                    cars    : 34,
+                    accident: 0,
+                    suicide : 14,
+                    assault : 2
+                },
+                "65-74" : {
+                    pop     : 59646,
+                    cars    : 17,
+                    accident: 0,
+                    suicide : 4,
+                    assault : 1
+                },
+                "75+"   : {
+                    pop     : 28088,
+                    cars    : 12,
+                    accident: 0,
+                    suicide : 1,
+                    assault : 0
+                }
+
+        },
+        asian : {
+            pop     : 7702687,
+            cars    : 476,
+            accident: 3,
+            suicide : 189,
+            assault : 124,
+                "0-14"  : {
+                    pop     : 1584676,
+                    cars    : 14,
+                    accident: 0,
+                    suicide : 2,
+                    assault : 1
+                },
+                "15-24" : {
+                    pop     : 1181215,
+                    cars    : 113,
+                    accident: 1,
+                    suicide : 38,
+                    assault : 34
+                },
+                "25-34" : {
+                    pop     : 1279501,
+                    cars    : 98,
+                    accident: 2,
+                    suicide : 54,
+                    assault : 36
+                },
+                "35-44" : {
+                    pop     : 1242803,
+                    cars    : 49,
+                    accident: 0,
+                    suicide : 27,
+                    assault : 23
+                },
+                "45-54" : {
+                    pop     : 1036403,
+                    cars    : 57,
+                    accident: 0,
+                    suicide : 28,
+                    assault : 18
+                },
+                "55-64" : {
+                    pop     : 741756,
+                    cars    : 50,
+                    accident: 0,
+                    suicide : 20,
+                    assault : 9
+                },
+                "65-74" : {
+                    pop     : 400198,
+                    cars    : 52,
+                    accident: 0,
+                    suicide : 12,
+                    assault : 2
+                },
+                "75+"   : {
+                    pop     : 236135,
+                    cars    : 43,
+                    accident: 0,
+                    suicide : 8,
+                    assault : 1
+                }
+
+        },
+        african : {
+            pop     : 18812260, 
+            cars    : 3146,
+            accident: 100,
+            suicide : 946,
+            assault : 5460,
+                "0-14"  : {
+                    pop     : 4698593,
+                    cars    : 147,
+                    accident: 14,
+                    suicide : 6,
+                    assault : 70
+                },
+                "15-24" : {
+                    pop     : 3336709,
+                    cars    : 687,
+                    accident: 36,
+                    suicide : 212,
+                    assault : 2295
+                },
+                "25-34" : {
+                    pop     : 2587488,
+                    cars    : 682,
+                    accident: 27,
+                    suicide : 241,
+                    assault : 1862
+                },
+                "35-44" : {
+                    pop     : 2483766,
+                    cars    : 503,
+                    accident: 10,
+                    suicide : 177,
+                    assault : 710
+                },
+                "45-54" : {
+                    pop     : 2590315,
+                    cars    : 489,
+                    accident: 6,
+                    suicide : 137,
+                    assault : 342
+                },
+                "55-64" : {
+                    pop     : 1767574,
+                    cars    : 366,
+                    accident: 4,
+                    suicide : 99,
+                    assault : 133
+                },
+                "65-74" : {
+                    pop     : 856880,
+                    cars    : 152,
+                    accident: 2,
+                    suicide : 39,
+                    assault : 34
+                },
+                "75+"   : {
+                    pop     : 490935,
+                    cars    : 120,
+                    accident: 1,
+                    suicide : 35,
+                    assault : 14
+                }
+
+        },
+        white : {
+            pop     : 98386442,
+            cars    : 17318,
+            accident: 75,
+            suicide : 14762,
+            assault : 1894,
+                "0-14"  : {
+                    pop     : 17322722,
+                    cars    : 456,
+                    accident: 29,
+                    suicide : 54,
+                    assault : 49
+                },
+                "15-24" : {
+                    pop     : 12930177,
+                    cars    : 3278,
+                    accident: 74,
+                    suicide : 1344,
+                    assault : 370
+                },
+                "25-34" : {
+                    pop     : 12171263,
+                    cars    : 2661,
+                    accident: 52,
+                    suicide : 1767,
+                    assault : 422
+                },
+                "35-44" : {
+                    pop     : 12813144,
+                    cars    : 2310,
+                    accident: 56,
+                    suicide : 2069,
+                    assault : 366
+                },
+                "45-54" : {
+                    pop     : 15605703,
+                    cars    : 2957,
+                    accident: 64,
+                    suicide : 3158,
+                    assault : 362
+                },
+                "55-64" : {
+                    pop     : 13434297,
+                    cars    : 2447,
+                    accident: 37,
+                    suicide : 2658,
+                    assault : 211
+                },
+                "65-74" : {
+                    pop     : 8045131,
+                    cars    : 1368,
+                    accident: 30,
+                    suicide : 1726,
+                    assault : 83
+                },
+                "75+"   : {
+                    pop     : 6064065,
+                    cars    : 1841,
+                    accident: 22,
+                    suicide : 1986,
+                    assault : 29
+                }
+
+        },
+        hispanic : {
+            pop     : 25618800,
+            cars    : 3291,
+            accident: 34,
+            suicide : 868,
+            assault : 1706,
+                "0-14"  : {
+                    pop     : 7364334,
+                    cars    : 185,
+                    accident: 4,
+                    suicide : 6,
+                    assault : 32,
+                },
+                "15-24" : {
+                    pop     : 4648370,
+                    cars    : 940,
+                    accident: 12,
+                    suicide : 192,
+                    assault : 747,
+                },
+                "25-34" : {
+                    pop     : 4419184,
+                    cars    : 794,
+                    accident: 9,
+                    suicide : 188,
+                    assault : 562,
+                },
+                "35-44" : {
+                    pop     : 3734405,
+                    cars    : 518,
+                    accident: 5,
+                    suicide : 147,
+                    assault : 209,
+                },
+                "45-54" : {
+                    pop     : 2735916,
+                    cars    : 381,
+                    accident: 4,
+                    suicide : 131,
+                    assault : 113
+                },
+                "55-64" : {
+                    pop     : 1534709,
+                    cars    : 228,
+                    accident: 0,
+                    suicide : 96,
+                    assault : 33
+                },
+                "65-74" : {
+                    pop     : 734664,
+                    cars    : 127,
+                    accident: 0,
+                    suicide : 53,
+                    assault : 5
+                },
+                "75+"   : {
+                    pop     : 447218,
+                    cars    : 118,
+                    accident: 0,
+                    suicide : 54,
+                    assault : 4
+                }
+
+        }
+    }
+}
